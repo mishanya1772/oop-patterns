@@ -1,2 +1,2 @@
-# oop-patterns-ts-playwright
+# oop-patterns
 OOP patterns in e2e automation tests
