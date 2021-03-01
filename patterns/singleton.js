@@ -1,14 +1,14 @@
-class Singleton {
+class TabsRecord {
   constructor() {
-    if (Singleton._instance) {
-      return Singleton._instance;
+    if (TabsRecord._instance) {
+      return TabsRecord._instance;
     }
 
     this.base = browser.getWindowHandles()[0];
     this.new = browser.getWindowHandles()[1];
 
-    Singleton._instance = this;
+    TabsRecord._instance = this;
   }
 }
 
-module.exports = Singleton;
+module.exports = TabsRecord;

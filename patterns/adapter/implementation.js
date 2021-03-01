@@ -1,5 +1,5 @@
-const PlaywrightBrowser = require('./based.on.playwright')
-const WDIOBrowser = require('./based.on.wdio')
+const PlaywrightBrowser = require('./based.on.playwright');
+const WDIOBrowser = require('./based.on.wdio');
 
 const selectedBrowser = ((browserInstance) => {
   class Adapter {
