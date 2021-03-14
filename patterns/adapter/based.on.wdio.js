@@ -1,32 +1,26 @@
 class WDIOBrowser {
-  goUrl(url) {
-    browser.url(url);
-    expect(browser.getTitle()).toBe('XYZ Bank');
+  async goUrl(url) {
+    await browser.url(url);
+    expect(await browser.getTitle()).toBe('XYZ Bank');
   }
 
-  clickOn(locator) {
-    this.waitForElement(locator);
-    return $(locator).click();
+  async clickOn(locator) {
+    return (await $(locator)).click();
   }
 
-  fillData(locator, data) {
-    this.waitForElement(locator);
-    return $(locator).setValue(data);
+  async fillData(locator, data) {
+    return (await $(locator)).setValue(data);
   }
 
-  checkAlert() {
-    const checkAlertText = browser.getAlertText().includes('Customer added successfully with customer');
-    expect(checkAlertText).toBe(true);
+  async checkAlert() {
+    const checkAlertText = await browser.getAlertText();
+    expect(checkAlertText.includes('Customer added successfully with customer')).toBe(true);
   }
 
-  fillNewCustomerData(firstName, lastName, code) {
-    this.fillData('[placeholder="First Name"]', firstName);
-    this.fillData('[placeholder="Last Name"]', lastName);
-    this.fillData('[placeholder="Post Code"]', code);
-  }
-
-  waitForElement(locator) {
-    return browser.waitUntil(() => $(locator).isDisplayed() === true);
+  async fillNewCustomerData(firstName, lastName, code) {
+    await this.fillData('[placeholder="First Name"]', firstName);
+    await this.fillData('[placeholder="Last Name"]', lastName);
+    return this.fillData('[placeholder="Post Code"]', code);
   }
 }
 

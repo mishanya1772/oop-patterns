@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "@wdio/sync": "^7.0.8",
     "webdriverio": "6.4.0"
   },
   "devDependencies": {
@@ -23,7 +22,9 @@
   },
   "jest": {
     "preset": "jest-playwright-preset",
-    "testMatch": ["**/adapted.js"]
+    "testMatch": [
+      "**/adapted.js"
+    ]
   },
   "author": "",
   "license": "ISC",

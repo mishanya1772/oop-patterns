@@ -1,49 +1,57 @@
 const Browser = require('../singleton');
 
 class PlaywrightBrowser {
+  alertDialog;
+
   async goUrl(url) {
-    const plBrowser = await new Browser().session;
-    const plPage = await plBrowser.newPage();
+    const plPage = await new Browser().tab;
 
     await plPage.goto(url);
     expect(await plPage.title()).toBe('XYZ Bank');
 
-    return plPage.close();
-    // return this.closeBr();
+    plPage.on('dialog', async (dialog) => {
+      this.alertDialog = await dialog.message();
+      await dialog.accept();
+    });
   }
 
   async clickOn(locator) {
+    const plPage = await new Browser().tab;
+
     await this.waitForElement(locator);
-    return this.plPage(locator);
+    return plPage.click(locator);
   }
 
   async fillData(locator, data) {
+    const plPage = await new Browser().tab;
+
     await this.waitForElement(locator);
-    return page.fill(locator, data);
+    return plPage.fill(locator, data);
   }
 
   async checkAlert() {
-    // const checkAlertText = browser.getAlertText().includes('Customer added successfully with customer');
-    // expect(checkAlertText).toBe(true);
-    await this.plPage.close();
-    return this.closeBr();
+    expect(await this.alertDialog.includes('Customer added successfully with customer')).toBe(true);
   }
 
   async fillNewCustomerData(firstName, lastName, code) {
     await this.fillData('[placeholder="First Name"]', firstName);
     await this.fillData('[placeholder="Last Name"]', lastName);
-    await this.fillData('[placeholder="Post Code"]', code);
+    return this.fillData('[placeholder="Post Code"]', code);
   }
 
   async waitForElement(locator) {
-    return this.plPage.waitForSelector(locator);
-  }
+    const plPage = await new Browser().tab;
 
-  async closeBr() {
-    const plBrowser = await new Browser().session;
-
-    return plBrowser.close();
+    return plPage.waitForSelector(locator);
   }
 }
+
+afterAll(async () => {
+  const plPage = await new Browser().tab;
+  const browser = await new Browser().browser;
+
+  await plPage.close();
+  return browser.close();
+});
 
 module.exports = PlaywrightBrowser;

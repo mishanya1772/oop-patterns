@@ -5,7 +5,12 @@ class KeepSession {
     if (KeepSession._instance) {
       return KeepSession._instance;
     }
-    this.session = chromium.launch({ headless: false });
+
+    this.browser = chromium.launch({
+      args: ['--start-maximized'],
+      headless: false
+    });
+    this.tab = this.browser.then(e => e.newPage());
 
     KeepSession._instance = this;
   }
