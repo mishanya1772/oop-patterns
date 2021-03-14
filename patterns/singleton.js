@@ -1,14 +1,14 @@
-class TabsRecord {
+const { chromium } = require('playwright');
+
+class KeepSession {
   constructor() {
-    if (TabsRecord._instance) {
-      return TabsRecord._instance;
+    if (KeepSession._instance) {
+      return KeepSession._instance;
     }
+    this.session = chromium.launch({ headless: false });
 
-    this.base = browser.getWindowHandles()[0];
-    this.new = browser.getWindowHandles()[1];
-
-    TabsRecord._instance = this;
+    KeepSession._instance = this;
   }
 }
 
-module.exports = TabsRecord;
+module.exports = KeepSession;

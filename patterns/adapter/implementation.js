@@ -1,18 +1,34 @@
 const PlaywrightBrowser = require('./based.on.playwright');
 const WDIOBrowser = require('./based.on.wdio');
 
-const selectedBrowser = ((browserInstance) => {
-  class Adapter {
-    constructor(framework) {
-      this.selectedBrowser = framework;
-    }
-
-    open(url) {
-      this.selectedBrowser.goUrl(url);
-    }
+module.exports = new class {
+  constructor(browserInstance) {
+    this.browserInstance = browserInstance;
   }
 
-  return new Adapter(browserInstance);
-})(new WDIOBrowser());
+  async open(url) {
+    await this.browserInstance.goUrl(url);
+    return this;
+  }
 
-module.exports = selectedBrowser;
+  async clickOn(locator) {
+    await this.browserInstance.clickOn(locator);
+    return this;
+  }
+
+  async fillData(locator, data) {
+    await this.browserInstance.fillData(locator, data);
+    return this;
+  }
+
+  async checkAlert() {
+    await this.browserInstance.checkAlert();
+    return this;
+  }
+
+  async fillNewCustomerData(firstName, lastName, code) {
+    await this.browserInstance.fillNewCustomerData(firstName, lastName, code);
+    return this;
+  }
+
+}(new PlaywrightBrowser());

@@ -19,7 +19,7 @@
   },
   "scripts": {
     "wdio": "npx wdio run config/wdio.conf.js",
-    "jest": "jest"
+    "jest": "jest --detectOpenHandles"
   },
   "jest": {
     "preset": "jest-playwright-preset",
