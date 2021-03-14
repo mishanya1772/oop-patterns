@@ -1,5 +1,6 @@
-const PlaywrightBrowser = require('./based.on.playwright');
-const WDIOBrowser = require('./based.on.wdio');
+const playwrightBrowser = new (require('./based.on.playwright'))();
+const wdioBrowser = new (require('./based.on.wdio'))();
+const instance = require('../module')().selectFramework(wdioBrowser);
 
 module.exports = new class {
   constructor(browserInstance) {
@@ -30,5 +31,16 @@ module.exports = new class {
     await this.browserInstance.fillNewCustomerData(firstName, lastName, code);
     return this;
   }
+}(instance.getFramework());
 
-}(new PlaywrightBrowser());
+if (instance.getFramework() === playwrightBrowser) {
+  afterAll(async () => {
+    const Browser = require('../singleton');
+
+    const plPage = await new Browser().tab;
+    const browser = await new Browser().browser;
+
+    await plPage.close();
+    return browser.close();
+  });
+}

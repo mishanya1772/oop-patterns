@@ -16,7 +16,7 @@ Run tests based on WDIO:
 ```
 Run tests based on Playwright:
  - open **_patterns / adapter / implementation.js_** file
- - change the 16th line from **new WDIOBrowser()** to **new PlaywrightBrowser()**
+ - change the 3rd line from **wdioBrowser** to **playwrightBrowser**
 ```
  - run tests: npm run jest
 ```

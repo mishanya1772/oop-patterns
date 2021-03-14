@@ -23,7 +23,7 @@
   "jest": {
     "preset": "jest-playwright-preset",
     "testMatch": [
-      "**/adapted.js"
+      "**/tests.js"
     ]
   },
   "author": "",
