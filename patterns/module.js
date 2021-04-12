@@ -12,6 +12,10 @@ module.exports = () => {
       instance.selected = instance[`${process.env.conf.trim()}`];
       return this;
     },
+    changeFramework(newFramework) {
+      instance.selected = instance[newFramework];
+      return this;
+    },
     getFramework() {
       return instance.selected;
     }
