@@ -2,31 +2,28 @@ const Browser = require('../singleton');
 
 class PlaywrightBrowser {
   alertDialog;
+  page;
 
   async goUrl(url) {
-    const plPage = await new Browser().tab;
+     this.page = await new Browser().tab;
 
-    await plPage.goto(url);
-    expect(await plPage.title()).toBe('XYZ Bank');
+    await this.page.goto(url);
+    expect(await this.page.title()).toBe('XYZ Bank');
 
-    plPage.on('dialog', async (dialog) => {
+    this.page.on('dialog', async (dialog) => {
       this.alertDialog = await dialog.message();
       await dialog.accept();
     });
   }
 
   async clickOn(locator) {
-    const plPage = await new Browser().tab;
-
     await this.waitForElement(locator);
-    return plPage.click(locator);
+    return this.page.click(locator);
   }
 
   async fillData(locator, data) {
-    const plPage = await new Browser().tab;
-
     await this.waitForElement(locator);
-    return plPage.fill(locator, data);
+    return this.page.fill(locator, data);
   }
 
   async checkAlert() {
@@ -40,9 +37,7 @@ class PlaywrightBrowser {
   }
 
   async waitForElement(locator) {
-    const plPage = await new Browser().tab;
-
-    return plPage.waitForSelector(locator);
+    return this.page.waitForSelector(locator);
   }
 }
 
