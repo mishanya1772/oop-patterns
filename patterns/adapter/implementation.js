@@ -1,6 +1,4 @@
-const playwrightBrowser = new (require('./based.on.playwright'))();
-const wdioBrowser = new (require('./based.on.wdio'))();
-const instance = require('../module')().selectFramework(wdioBrowser);
+const instance = require('../module')().setFramework().getFramework();
 
 module.exports = new class {
   constructor(browserInstance) {
@@ -8,27 +6,22 @@ module.exports = new class {
   }
 
   async open(url) {
-    await this.browserInstance.goUrl(url);
-    return this;
+    return this.browserInstance.goUrl(url);
   }
 
   async clickOn(locator) {
-    await this.browserInstance.clickOn(locator);
-    return this;
+    return this.browserInstance.clickOn(locator);
   }
 
   async fillData(locator, data) {
-    await this.browserInstance.fillData(locator, data);
-    return this;
+    return this.browserInstance.fillData(locator, data);
   }
 
   async checkAlert() {
-    await this.browserInstance.checkAlert();
-    return this;
+    return this.browserInstance.checkAlert();
   }
 
   async fillNewCustomerData(firstName, lastName, code) {
-    await this.browserInstance.fillNewCustomerData(firstName, lastName, code);
-    return this;
+    return this.browserInstance.fillNewCustomerData(firstName, lastName, code);
   }
-}(instance.getFramework());
+}(instance);

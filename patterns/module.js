@@ -1,13 +1,19 @@
+const playwrightBrowser = new (require('./adapter/based.on.playwright'))();
+const wdioBrowser = new (require('./adapter/based.on.wdio'))();
+
 module.exports = () => {
-  const instance = { browser: null };
+  const instance = {
+    wdio: wdioBrowser,
+    playwright: playwrightBrowser
+  };
 
   return {
-    selectFramework(data) {
-      instance.browser = data;
+    setFramework() {
+      instance.selected = instance[`${process.env.conf.trim()}`];
       return this;
     },
-    getFramework(){
-      return instance.browser
+    getFramework() {
+      return instance.selected;
     }
   };
 };
