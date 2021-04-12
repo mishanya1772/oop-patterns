@@ -24,6 +24,9 @@
     "preset": "jest-playwright-preset",
     "testMatch": [
       "**/tests.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./config/playwrightCleanUp.js"
     ]
   },
   "author": "",
