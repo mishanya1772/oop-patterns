@@ -12,7 +12,7 @@ To set up this project:
 
 Run tests based on WDIO:
 ```
- - run tests: npm run test
+ - run tests: npm run wdio
 ```
 Run tests based on Playwright:
 ```
