@@ -6,8 +6,8 @@ describe('Add', () => {
     await adaptBrowser.open(baseUrl);
     await adaptBrowser.clickOn('button[ng-click="manager()"]');
     await adaptBrowser.clickOn('button[ng-click="addCust()"]');
-    await adaptBrowser.fillNewCustomerData('Test First Name', 'Last Name', '03065');
+    await adaptBrowser.fillNewCustomerData();
     await adaptBrowser.clickOn('button[type="submit"]');
-    await adaptBrowser.checkAlert();
+    expect(await adaptBrowser.getAlertText()).toContain('Customer added successfully with customer');
   });
 });

@@ -1,11 +1,19 @@
 const Browser = require('../singleton');
+const testData = require('../builder');
 
 class PlaywrightBrowser {
-  alertDialog;
-  page;
+  constructor() {
+    this.alertDialog = null;
+    this.page = null;
+    this.postCode = testData
+      .prepareUrl()
+      .longitude()
+      .latitude()
+      .send();
+  }
 
   async goUrl(url) {
-     this.page = await new Browser().tab;
+    this.page = await new Browser().tab;
 
     await this.page.goto(url);
     expect(await this.page.title()).toBe('XYZ Bank');
@@ -26,14 +34,14 @@ class PlaywrightBrowser {
     return this.page.fill(locator, data);
   }
 
-  async checkAlert() {
-    expect(await this.alertDialog.includes('Customer added successfully with customer')).toBe(true);
+  async getAlertText() {
+    return this.alertDialog;
   }
 
-  async fillNewCustomerData(firstName, lastName, code) {
+  async fillNewCustomerData(firstName = 'Test First Name', lastName = 'Last Name') {
     await this.fillData('[placeholder="First Name"]', firstName);
     await this.fillData('[placeholder="Last Name"]', lastName);
-    return this.fillData('[placeholder="Post Code"]', code);
+    return this.fillData('[placeholder="Post Code"]', await this.postCode);
   }
 
   async waitForElement(locator) {

@@ -17,11 +17,11 @@ module.exports = new class {
     return this.browserInstance.fillData(locator, data);
   }
 
-  async checkAlert() {
-    return this.browserInstance.checkAlert();
+  async getAlertText() {
+    return this.browserInstance.getAlertText();
   }
 
-  async fillNewCustomerData(firstName, lastName, code) {
-    return this.browserInstance.fillNewCustomerData(firstName, lastName, code);
+  async fillNewCustomerData() {
+    return this.browserInstance.fillNewCustomerData();
   }
 }(instance);

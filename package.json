@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "got": "^11.8.2",
     "webdriverio": "6.4.0"
   },
   "devDependencies": {

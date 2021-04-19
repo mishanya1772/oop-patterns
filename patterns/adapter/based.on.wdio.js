@@ -1,4 +1,12 @@
+const testData = require('../builder');
+
 class WDIOBrowser {
+  constructor() {
+    this.postCode = testData
+      .prepareUrl()
+      .send();
+  }
+
   async goUrl(url) {
     await browser.url(url);
     expect(await browser.getTitle()).toBe('XYZ Bank');
@@ -12,15 +20,14 @@ class WDIOBrowser {
     return (await $(locator)).setValue(data);
   }
 
-  async checkAlert() {
-    const checkAlertText = await browser.getAlertText();
-    expect(checkAlertText.includes('Customer added successfully with customer')).toBe(true);
+  async getAlertText() {
+    return browser.getAlertText();
   }
 
-  async fillNewCustomerData(firstName, lastName, code) {
+  async fillNewCustomerData(firstName = 'Test First Name', lastName = 'Last Name') {
     await this.fillData('[placeholder="First Name"]', firstName);
     await this.fillData('[placeholder="Last Name"]', lastName);
-    return this.fillData('[placeholder="Post Code"]', code);
+    return this.fillData('[placeholder="Post Code"]', this.postCode);
   }
 }
 
