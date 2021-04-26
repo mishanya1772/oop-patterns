@@ -1,10 +1,9 @@
-const testData = require('../builder');
+const ApiContract = require('../builder');
+const request = require('../../components/addGetRequest');
 
 class WDIOBrowser {
   constructor() {
-    this.postCode = testData
-      .prepareUrl()
-      .send();
+    this.prepareData = request(new ApiContract());
   }
 
   async goUrl(url) {
@@ -25,9 +24,14 @@ class WDIOBrowser {
   }
 
   async fillNewCustomerData(firstName = 'Test First Name', lastName = 'Last Name') {
+    const postCode = await this.prepareData
+      .random()
+      .byCoordinates()
+      .getRequest();
+
     await this.fillData('[placeholder="First Name"]', firstName);
     await this.fillData('[placeholder="Last Name"]', lastName);
-    return this.fillData('[placeholder="Post Code"]', this.postCode);
+    return this.fillData('[placeholder="Post Code"]', postCode);
   }
 }
 

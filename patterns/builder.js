@@ -1,28 +1,22 @@
-const got = require('got');
-
-module.exports = new class Api {
-  constructor(url) {
-    this.url = url;
+class PostcodeContract {
+  constructor() {
+    this.url = 'http://api.postcodes.io/';
   }
 
-  prepareUrl(data = 'http://api.postcodes.io/random/postcodes?') {
-    this.url = data;
+  byCoordinates(lat = '-2.302836', lon = '53.455654') {
+    this.url += `?lon=${lat}&lat=${lon}`;
     return this;
   }
 
-  latitude(data = '-2.302836') {
-    this.url += `&lon=-${data}`;
+  random() {
+    this.url += 'random/postcodes';
     return this;
   }
 
-  longitude(data = '53.455654') {
-    this.url += `&lan=-${data}`;
+  outcodes() {
+    this.url += 'outcodes';
     return this;
   }
+}
 
-  async send() {
-    const response = await got(this.url);
-
-    return JSON.parse(response.body).result.postcode;
-  }
-};
+module.exports = PostcodeContract;

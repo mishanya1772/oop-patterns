@@ -1,15 +1,12 @@
 const Browser = require('../singleton');
-const testData = require('../builder');
+const ApiContract = require('../builder');
+const request = require('../../components/addGetRequest');
 
 class PlaywrightBrowser {
   constructor() {
     this.alertDialog = null;
     this.page = null;
-    this.postCode = testData
-      .prepareUrl()
-      .longitude()
-      .latitude()
-      .send();
+    this.prepareData = request(new ApiContract());
   }
 
   async goUrl(url) {
@@ -39,9 +36,11 @@ class PlaywrightBrowser {
   }
 
   async fillNewCustomerData(firstName = 'Test First Name', lastName = 'Last Name') {
+    const postCode = await this.prepareData.random().getRequest();
+
     await this.fillData('[placeholder="First Name"]', firstName);
     await this.fillData('[placeholder="Last Name"]', lastName);
-    return this.fillData('[placeholder="Post Code"]', await this.postCode);
+    return this.fillData('[placeholder="Post Code"]', postCode);
   }
 
   async waitForElement(locator) {
